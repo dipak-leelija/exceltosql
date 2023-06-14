@@ -1,0 +1,17 @@
+{
+    "name": "admin/phpexcel",
+    "autoload": {
+        "psr-4": {
+            "Admin\\Phpexcel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dipak Majumdar",
+            "email": "dipakmajumdar.leelija@gmail.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpexcel": "^1.8"
+    }
+}
