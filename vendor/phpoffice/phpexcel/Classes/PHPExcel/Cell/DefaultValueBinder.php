@@ -54,6 +54,7 @@ class PHPExcel_Cell_DefaultValueBinder implements PHPExcel_Cell_IValueBinder
      */
     public function bindValue(PHPExcel_Cell $cell, $value = null)
     {
+        // print_r($value); exit;
         // sanitize UTF-8 strings
         if (is_string($value)) {
             $value = PHPExcel_Shared_String::SanitizeUTF8($value);
@@ -80,6 +81,7 @@ class PHPExcel_Cell_DefaultValueBinder implements PHPExcel_Cell_IValueBinder
      * @return  string
      */
     public static function dataTypeForValue($pValue = null) {
+        // print_r($pValue);exit;
         // Match the value against a few data types
         if ($pValue === null) {
             return PHPExcel_Cell_DataType::TYPE_NULL;
@@ -87,7 +89,7 @@ class PHPExcel_Cell_DefaultValueBinder implements PHPExcel_Cell_IValueBinder
             return PHPExcel_Cell_DataType::TYPE_STRING;
         } elseif ($pValue instanceof PHPExcel_RichText) {
             return PHPExcel_Cell_DataType::TYPE_INLINE;
-        } elseif ($pValue{0} === '=' && strlen($pValue) > 1) {
+        } elseif ($pValue[0] === '=' && strlen($pValue) > 1) {
             return PHPExcel_Cell_DataType::TYPE_FORMULA;
         } elseif (is_bool($pValue)) {
             return PHPExcel_Cell_DataType::TYPE_BOOL;
@@ -95,7 +97,7 @@ class PHPExcel_Cell_DefaultValueBinder implements PHPExcel_Cell_IValueBinder
             return PHPExcel_Cell_DataType::TYPE_NUMERIC;
         } elseif (preg_match('/^[\+\-]?([0-9]+\\.?[0-9]*|[0-9]*\\.?[0-9]+)([Ee][\-\+]?[0-2]?\d{1,3})?$/', $pValue)) {
             $tValue = ltrim($pValue, '+-');
-            if (is_string($pValue) && $tValue{0} === '0' && strlen($tValue) > 1 && $tValue{1} !== '.' ) {
+            if (is_string($pValue) && $tValue[0] === '0' && strlen($tValue) > 1 && $tValue[1] !== '.' ) {
                 return PHPExcel_Cell_DataType::TYPE_STRING;
             } elseif((strpos($pValue, '.') === false) && ($pValue > PHP_INT_MAX)) {
                 return PHPExcel_Cell_DataType::TYPE_STRING;
