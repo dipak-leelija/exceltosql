@@ -11,10 +11,12 @@ if(isset($_POST['submit'])) {
                $isUploaded = copy($_FILES['uploadFile']['tmp_name'], $file);
 			   // check uploaded file
                if($isUploaded) {
+				
 					// Include PHPExcel files and database configuration file
-                    include("db.php");
+                    include("config.php");
 					require_once __DIR__ . '/vendor/autoload.php';
                     include(__DIR__ .'/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php');
+
                     try {
                         // load uploaded file
                         $objPHPExcel = PHPExcel_IOFactory::load($file);
@@ -45,16 +47,18 @@ if(isset($_POST['submit'])) {
 							break;
 						}
 						// HTML content to render on webpage
+						$rollno 	= isset($row[0]) ? $row[0] : '';
+						$name 		= isset($row[1]) ? $row[1] : '';
+						$age 		= isset($row[2]) ? $row[2] : '';
+						$program 	= isset($row[3]) ? $row[3] : '';
+						
 						$html.="<tr>";
-						$rollno = isset($row[0]) ? $row[0] : '';
-						$name = isset($row[1]) ? $row[1] : '';
-						$age = isset($row[2]) ? $row[2] : '';
-						$program = isset($row[3]) ? $row[3] : '';
 						$html.="<td>".$rollno."</td>";
 						$html.="<td>".$name."</td>";
 						$html.="<td>".$age."</td>";
 						$html.="<td>".$program."</td>";
 						$html.="</tr>";
+						
 						// Insert into database
 						$query = "INSERT INTO participants (rollno,name,age,program) 
 								values('".$rollno."','".$name."','".$age."','".$program."')";
